@@ -5,33 +5,36 @@
 // Other themes are extracted from various win7 clock gadgets. So those may not be used considering copyright.
 // Those are only for example purposes to show how to add and apply a new theme.
 
-command: "date",
+// Example for customization: Timezone, theme, label
+
+command: "export TZ='US/Central'; date +'%H:%M:%S'",
  
 refreshFrequency: 1000,
 
 render: function (output) {
-  return "<ul id=\"clock\">\
-    <li id=\"sec\"></li>\
-    <li id=\"hour\"></li>\
-    <li id=\"min\"></li>\
-    <li id=\"clock-label\">Dhaka</li>\
-  </ul>";
+	return "<ul id=\"clock\">\
+		<li id=\"sec\"></li>\
+		<li id=\"hour\"></li>\
+		<li id=\"min\"></li>\
+		<li id=\"clock-label\">USA</li>\
+	</ul>";
 },
  
 style: "                              																\n\
-clock-size = 150px																										\n\
-hand-width = 7px 																											\n\
-hand-height = 150px 																									\n\
-image-folder = 'default' 																							\n\
+clock-size = 130px																										\n\
+hand-width = 13px 																										\n\
+hand-height = 130px 																									\n\
+image-folder = 'vatch-dark' 																						\n\
 																																			\n\
 url-for(image-name) 																									\n\
 	url('analog-clock.widget/'+image-folder+'/'+image-name) 						\n\
 																																			\n\
 bottom: 110px                        																	\n\
-left: 20px																														\n\
-                        																							\n\
+left: 170px																														\n\
+																																			\n\
 #clock 																																\n\
 	position: relative																									\n\
+	top: -10px 																													\n\
 	width: clock-size																										\n\
 	height: clock-size																									\n\
 	margin: 5px auto 0 auto																							\n\
@@ -40,12 +43,15 @@ left: 20px																														\n\
 																																			\n\
 #clock-label																													\n\
 	position: absolute																									\n\
+	width: clock-size*0.8																								\n\
+	left: clock-size*0.1 																								\n\
+	top: -20px																													\n\
 	font: 10px Arial 																										\n\
-	color: rgba(#000, 0.8) 																							\n\
-	width: clock-size																										\n\
-	top: (clock-size/3.2)																								\n\
-	left: 0 																														\n\
 	text-align: center																									\n\
+	color: rgba(#fff, 0.4) 																							\n\
+	background: rgba(#000, 0.3) 																				\n\
+	padding:3px 																												\n\
+	border-radius: 10px 																								\n\
 	z-index: 1																													\n\
 																																			\n\
 #sec, #min, #hour																											\n\
@@ -74,22 +80,22 @@ p																																			\n\
 
 update: function (output, domEl) {
 	// Date from Unix Terminal
-	// var comp = output.split(" ")[4].split(":");
-	// var seconds = comp[2], mins = comp[1], hours = comp[0];
+	var comp = output.split(":");
+	var seconds = comp[2], mins = comp[1], hours = comp[0];
 
 	// Date from Javascript
-	var date = new Date(), seconds = date.getSeconds(), mins = date.getMinutes(), hours = date.getHours();
-    
-  var sdegree = seconds * 6;
-  var srotate = "rotate(" + sdegree + "deg)";
+	// var date = new Date(), seconds = date.getSeconds(), mins = date.getMinutes(), hours = date.getHours();
+		
+	var sdegree = seconds * 6;
+	var srotate = "rotate(" + sdegree + "deg)";
 	
-  var mdegree = mins * 6 + (seconds / 10);
+	var mdegree = mins * 6 + (seconds / 10);
 	var mrotate = "rotate(" + mdegree + "deg)";
 
 	var hdegree = hours * 30 + (mins / 2);
 	var hrotate = "rotate(" + hdegree + "deg)";
 
-  $(domEl).find("#sec").css({"transform" : srotate});
+	$(domEl).find("#sec").css({"transform" : srotate});
 	$(domEl).find("#min").css({"transform" : mrotate});
- 	$(domEl).find("#hour").css({"transform" : hrotate});
+	$(domEl).find("#hour").css({"transform" : hrotate});
 }
